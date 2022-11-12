@@ -32,21 +32,22 @@ SSH into pi `ssh pi@raspberrypi`.
 
 Update OS `sudo apt update && sudo apt upgrade -y`
 
+Reboot `sudo reboot`
+
 Install docker `sudo apt install docker.io`
 
+### Install Portainer with Docker on Linux
 
-Using your own [SSL certificate with Portainer](https://docs.portainer.io/advanced/ssl)
-```bash
-docker run -d -p 9443:9443 -p 8000:8000 \
-    --name portainer --restart always \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v portainer_data:/data \
-    -v /etc/letsencrypt/live/yourdomain:/certs/live/yourdomain:ro \
-    -v /etc/letsencrypt/archive/yourdomain:/certs/archive/yourdomain:ro \
-    portainer/portainer-ce:latest \
-    --sslcert /certs/live/yourdomain/fullchain.pem \
-    --sslkey /certs/live/yourdomain/privkey.pem
+First, create the volume that Portainer Server will use to store its database:
+* `docker volume create portainer_data`
+
+Then, download and install the Portainer Server container:
+
 ```
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ee:latest
+
+```
+
 
 ### Useful links
 
