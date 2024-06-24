@@ -1,0 +1,16 @@
+---
+version: "2.1"
+services:
+  calibre:
+    image: linuxserver/calibre
+    container_name: calibre
+    environment:
+      - PUID=998
+      - PGID=100
+      - TZ=Europe/Zagreb
+    volumes:
+      - /mnt/public/sync/:/config
+    ports:
+      - 8082:8080
+      - 8081:8081
+    restart: unless-stopped
